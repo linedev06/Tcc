@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tauri&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Tauri', sans-serif;
+    background-color: #E8EFF2;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Conteúdo principal */
+#conteudo1, #conteudo2, #conteudo3, #conteudo4, #conteudo5, #conteudo6, #conteudo7 {
+    transition: background-color 0.3s ease;
+}
+
+
+/* Cabeçalho e logo */
+#logo {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+#logo2 {
+    border: #000000;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 200%;
+    height: max-content;
+}
+
+#minhaImagem {
+    position: sticky;
+    top: 0;
+    height: 600px;
+    max-width: 90%;
+    break-before: avoid;
+}
+
+#usuario {
+    margin: 20px auto;
+    height: 600px;
+    max-width: 90%;
+    border-radius: 30px;
+    background-color: #1AB3B8;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+}
+
+#usuario:hover {
+    transform: translateY(-5px);
+}
+
+#ft {
+    display: flex;
+    justify-content: center;
+}
+
+#texto p {
+    font-size: 2em;
+    color: #fff;
+    display: flex;
+    justify-content:center ;
+}
+
+#texto2 {
+    font-size: 2em;
+    color: #000000;
+    display: flex;
+    justify-content:left ;
+    padding-top: 100px;
+    margin-top: 150px;
+    margin-left:200px ;
+    padding: 4px 16px;
+    text-align: start;
+    
+}
+#conteudo2 {
+    border: solid #8bf0f0 4px ;
+    margin-top: 150px;
+    background-color: #8bf0f0;
+    padding-top: 200px;
+
+
+
+}
+
+#conteudo3 {
+    border: solid #E8EFF2 4px ;
+    margin-top: 300px;
+    background-color: #E8EFF2;
+    padding-top: 300px;
+}
+
+/* Funções */
+#funçao {
+    display: flex;
+    justify-content: center; /* Centraliza os elementos horizontalmente */
+    flex-wrap: wrap;
+    margin-top: 10px;
+    
+}
+
+#funçao1, #funçao2, #funçao3, #funçao4 {
+    width: 300px;
+    height: 180px;
+    border-radius: 20px;
+    background-color: #1AB3B8;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    justify-content: space-between;
+    margin: 10px; /* Reduz a margem para diminuir a distância */
+}
+
+#funçao1:hover, #funçao2:hover, #funçao3:hover, #funçao4:hover {
+    background-color: #8bf0f0;
+    transform: scale(1.05);
+}
+
+/* Media Queries */
+@media (max-width: 767px) {
+    #logo, #usuario, #funçao {
+        flex-direction: column;
+    }
+
+    #usuario, #funçao div {
+        width: auto;
+        margin: 10px;
+    }
+}
+@media (max-width: 767px) {
+    #texto2 {
+        flex-direction: column;
+    }
+
+    #texto2 div {
+        width: auto;
+        margin: 50px;
+    }
+}

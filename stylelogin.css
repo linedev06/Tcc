@@ -1,0 +1,29 @@
+body{
+    display: flex;
+    justify-content: right;
+    margin: 0;
+    
+}
+#box{
+    border: 2px solid;
+   width: 450px;
+   height: 650px;
+  margin-top: 200px;
+  margin-right: 100px;
+}
+.btn {
+
+    text-align: center;
+    width: 240px;
+    height: 35px;
+    display: inline-block;
+    background-color: #5263EB;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 12px;
+    margin-top: 38px;
+    display: flex;
+    justify-content: center;
+
+ }
