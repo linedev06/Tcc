@@ -7,5 +7,72 @@
 </head>
 <body>
     <h1>SITE EM DESENVOLVIMENTO, VOLTE MAIS TARDE 🛠🔧⚙</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+    // codigo para o contador
+
+    <div id="conteudo2">
+        <span id="number1"></span>
+        <span id="number2"></span>
+      <div id="num1"> <span id="counter">20</span></div> 
+    </div>
+      <div id="conteudo3">s</div>
+    <div id="conteudo4">d</div>
+    <div id="conteudo5">f</div>
+    <div id="conteudo6">r</div>
+    <div id="conteudo7">f</div>
+    
+    <script>
+        var counter = document.getElementById('counter');
+        var count = 20;
+
+        function updateCounter() {
+            counter.textContent = count;
+            count--;
+            if (count < 0) {
+                count = 20;
+            }
+        }
+
+        // Atualiza o contador imediatamente ao carregar a página
+        updateCounter();
+
+        // Atualiza o contador a cada segundo
+        setInterval(updateCounter, 10 * 1000);
+    </script>
+</body>
 </body>
 </html>

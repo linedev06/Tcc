@@ -1,0 +1,24 @@
+#conteudo2 {
+    border: solid #8bf0f0 4px ;
+    margin-top: 150px;
+    background-color: #8bf0f0;
+    padding-top: 2px;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000000;
+    transition: all 0.5s ease-in-out;
+
+}
+
+
+#conteudo3 {
+    border: solid #E8EFF2 4px ;
+    margin-top: 300px;
+    background-color: #E8EFF2;
+    padding-top: 300px;
+}
