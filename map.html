@@ -5,58 +5,100 @@
   <title>
    Justiça Digital
   </title>
-  <script src="https://cdn.tailwindcss.com">
-  </script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
   <style>
    body {
       font-family: "Inter", sans-serif;
+      background: #f9fafb;
+      color: #1e3a8a;
     }
+   /* Smooth fade and scale animations for modals */
+   .modal-enter {
+     opacity: 0;
+     transform: scale(0.95);
+     transition: opacity 0.3s ease, transform 0.3s ease;
+   }
+   .modal-enter-active {
+     opacity: 1;
+     transform: scale(1);
+   }
+   .modal-leave {
+     opacity: 1;
+     transform: scale(1);
+     transition: opacity 0.2s ease, transform 0.2s ease;
+   }
+   .modal-leave-active {
+     opacity: 0;
+     transform: scale(0.95);
+   }
+   /* Button hover with subtle scale */
+   button, a.button-link {
+     transition: all 0.3s ease;
+   }
+   button:hover, a.button-link:hover {
+     transform: scale(1.05);
+   }
+   /* Scrollbar styling for chat and modals */
+   #chatMessages::-webkit-scrollbar,
+   #calendarModal > div::-webkit-scrollbar,
+   #tutorialsPage::-webkit-scrollbar {
+     width: 8px;
+   }
+   #chatMessages::-webkit-scrollbar-thumb,
+   #calendarModal > div::-webkit-scrollbar-thumb,
+   #tutorialsPage::-webkit-scrollbar-thumb {
+     background-color: #3b82f6;
+     border-radius: 4px;
+   }
+   #chatMessages::-webkit-scrollbar-track,
+   #calendarModal > div::-webkit-scrollbar-track,
+   #tutorialsPage::-webkit-scrollbar-track {
+     background: #e0e7ff;
+   }
   </style>
  </head>
- <body class="bg-white text-blue-900 min-h-screen flex flex-col relative">
-  <!-- Main container for all pages -->
+ <body class="min-h-screen flex flex-col bg-gray-50 text-blue-900">
   <div class="flex-grow flex flex-col" id="app">
    <!-- Home Screen -->
-   <section class="flex flex-col items-center justify-center flex-grow px-6 text-center max-w-lg mx-auto" id="home">
-    <img alt="Logo do projeto Justiça Digital com ícone de balança estilizada em azul escuro sobre fundo branco" class="mx-auto mb-6 w-36 h-36 object-contain" height="150" src="https://storage.googleapis.com/a1aa/image/7d6a91df-2b24-4e51-b878-57a83b1c53d7.jpg" width="150"/>
-    <h1 class="text-xl sm:text-2xl font-semibold mb-10 max-w-xs mx-auto text-blue-900">
+   <section class="flex flex-col items-center justify-center flex-grow px-8 py-16 max-w-lg mx-auto text-center bg-white rounded-3xl shadow-2xl ring-1 ring-blue-200 transition-transform duration-500 hover:scale-[1.02]" id="home" aria-label="Tela inicial do sistema Justiça Digital">
+    <img alt="Logo do projeto Justiça Digital com ícone de balança estilizada em azul escuro sobre fundo branco" class="mx-auto mb-8 w-40 h-40 object-contain drop-shadow-lg" height="160" src="https://storage.googleapis.com/a1aa/image/7d6a91df-2b24-4e51-b878-57a83b1c53d7.jpg" width="160"/>
+    <h1 class="text-3xl sm:text-4xl font-extrabold mb-12 max-w-xs mx-auto text-gradient bg-gradient-to-r from-blue-700 to-blue-900 bg-clip-text text-transparent">
      Transformando inclusão digital em acesso a direitos.
     </h1>
-    <div class="flex flex-col sm:flex-row gap-6 w-full max-w-xs">
-     <button aria-label="Entrar no sistema" class="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-md shadow-md transition" id="btnEntrar">
+    <div class="flex flex-col sm:flex-row gap-8 w-full max-w-xs">
+     <button aria-label="Entrar no sistema" class="bg-gradient-to-r from-blue-700 to-blue-900 hover:from-blue-800 hover:to-blue-950 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-500/30 focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50 transform transition-transform duration-300" id="btnEntrar" type="button">
       Entrar
      </button>
-     <button aria-label="Criar nova conta" class="bg-white border-2 border-blue-700 text-blue-700 font-semibold py-3 rounded-md shadow-md hover:bg-blue-50 transition" id="btnCriarConta">
+     <button aria-label="Criar nova conta" class="bg-white border-2 border-blue-700 text-blue-700 font-bold py-4 rounded-xl shadow-md hover:bg-blue-50 focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50 transform transition-transform duration-300" id="btnCriarConta" type="button">
       Criar Conta
      </button>
     </div>
    </section>
    <!-- Login Modal -->
-   <section aria-describedby="loginDesc" aria-labelledby="loginTitle" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden" id="login" role="dialog">
-    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
-     <button aria-label="Fechar formulário de login" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 focus:outline-none" id="closeLogin">
-      <i class="fas fa-times fa-lg">
-      </i>
+   <section aria-describedby="loginDesc" aria-labelledby="loginTitle" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-6 opacity-0 pointer-events-none transition-opacity duration-300" id="login" role="dialog">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 relative transform scale-95 transition-transform duration-300">
+     <button aria-label="Fechar formulário de login" class="absolute top-5 right-5 text-gray-400 hover:text-gray-700 focus:outline-none" id="closeLogin" type="button">
+      <i class="fas fa-times fa-lg"></i>
      </button>
-     <h2 class="text-2xl font-semibold text-blue-900 mb-4 text-center" id="loginTitle">
+     <h2 class="text-3xl font-extrabold text-blue-900 mb-6 text-center" id="loginTitle">
       Entrar
      </h2>
-     <form class="flex flex-col gap-4" id="formLogin" novalidate="">
-      <label class="text-blue-900 font-medium" for="loginEmailCpf">
+     <form class="flex flex-col gap-6" id="formLogin" novalidate="">
+      <label class="text-blue-900 font-semibold text-lg" for="loginEmailCpf">
        E-mail ou CPF
       </label>
-      <input autocomplete="username" class="border border-blue-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="loginEmailCpf" inputmode="text" name="loginEmailCpf" placeholder="Digite seu e-mail ou CPF" required="" type="text"/>
-      <label class="text-blue-900 font-medium" for="loginSenha">
+      <input autocomplete="username" class="border border-blue-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-40 text-lg transition-shadow duration-300" id="loginEmailCpf" inputmode="text" name="loginEmailCpf" placeholder="Digite seu e-mail ou CPF" required="" type="text"/>
+      <label class="text-blue-900 font-semibold text-lg" for="loginSenha">
        Senha
       </label>
-      <input autocomplete="current-password" class="border border-blue-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="loginSenha" name="loginSenha" placeholder="Digite sua senha" required="" type="password"/>
-      <button class="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-md shadow-md transition" type="submit">
+      <input autocomplete="current-password" class="border border-blue-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-40 text-lg transition-shadow duration-300" id="loginSenha" name="loginSenha" placeholder="Digite sua senha" required="" type="password"/>
+      <button class="bg-gradient-to-r from-blue-700 to-blue-900 hover:from-blue-800 hover:to-blue-950 text-white font-extrabold py-4 rounded-xl shadow-lg shadow-blue-500/40 focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50 transform transition-transform duration-300" type="submit">
        Acessar
       </button>
       <div class="text-right">
-       <a class="text-sm text-blue-700 hover:underline" href="#" id="forgotPasswordLink">
+       <a class="text-sm text-blue-700 hover:underline focus:underline focus:outline-none" href="#" id="forgotPasswordLink">
         Esqueci minha senha
        </a>
       </div>
@@ -64,37 +106,36 @@
     </div>
    </section>
    <!-- Register Modal -->
-   <section aria-describedby="registerDesc" aria-labelledby="registerTitle" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden" id="register" role="dialog">
-    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative overflow-y-auto max-h-[90vh]">
-     <button aria-label="Fechar formulário de registro" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 focus:outline-none" id="closeRegister">
-      <i class="fas fa-times fa-lg">
-      </i>
+   <section aria-describedby="registerDesc" aria-labelledby="registerTitle" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-6 opacity-0 pointer-events-none transition-opacity duration-300" id="register" role="dialog">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 relative overflow-y-auto max-h-[90vh] transform scale-95 transition-transform duration-300">
+     <button aria-label="Fechar formulário de registro" class="absolute top-5 right-5 text-gray-400 hover:text-gray-700 focus:outline-none" id="closeRegister" type="button">
+      <i class="fas fa-times fa-lg"></i>
      </button>
-     <h2 class="text-2xl font-semibold text-blue-900 mb-4 text-center" id="registerTitle">
+     <h2 class="text-3xl font-extrabold text-blue-900 mb-6 text-center" id="registerTitle">
       Criar Conta
      </h2>
-     <form class="flex flex-col gap-4" id="formRegister" novalidate="">
-      <label class="text-blue-900 font-medium" for="registerNome">
+     <form class="flex flex-col gap-6" id="formRegister" novalidate="">
+      <label class="text-blue-900 font-semibold text-lg" for="registerNome">
        Nome completo
       </label>
-      <input autocomplete="name" class="border border-blue-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="registerNome" name="registerNome" placeholder="Digite seu nome completo" required="" type="text"/>
-      <label class="text-blue-900 font-medium" for="registerEmail">
+      <input autocomplete="name" class="border border-blue-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-40 text-lg transition-shadow duration-300" id="registerNome" name="registerNome" placeholder="Digite seu nome completo" required="" type="text"/>
+      <label class="text-blue-900 font-semibold text-lg" for="registerEmail">
        E-mail
       </label>
-      <input autocomplete="email" class="border border-blue-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="registerEmail" name="registerEmail" placeholder="Digite seu e-mail" required="" type="email"/>
-      <label class="text-blue-900 font-medium" for="registerCPF">
+      <input autocomplete="email" class="border border-blue-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-40 text-lg transition-shadow duration-300" id="registerEmail" name="registerEmail" placeholder="Digite seu e-mail" required="" type="email"/>
+      <label class="text-blue-900 font-semibold text-lg" for="registerCPF">
        CPF
       </label>
-      <input class="border border-blue-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="registerCPF" inputmode="numeric" maxlength="11" name="registerCPF" pattern="\d{11}" placeholder="Digite seu CPF (somente números)" required="" type="text"/>
-      <label class="text-blue-900 font-medium" for="registerSenha">
+      <input class="border border-blue-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-40 text-lg transition-shadow duration-300" id="registerCPF" inputmode="numeric" maxlength="11" name="registerCPF" pattern="\d{11}" placeholder="Digite seu CPF (somente números)" required="" type="text"/>
+      <label class="text-blue-900 font-semibold text-lg" for="registerSenha">
        Senha
       </label>
-      <input autocomplete="new-password" class="border border-blue-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="registerSenha" name="registerSenha" placeholder="Digite sua senha" required="" type="password"/>
-      <label class="text-blue-900 font-medium" for="registerSenhaConfirm">
+      <input autocomplete="new-password" class="border border-blue-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-40 text-lg transition-shadow duration-300" id="registerSenha" name="registerSenha" placeholder="Digite sua senha" required="" type="password"/>
+      <label class="text-blue-900 font-semibold text-lg" for="registerSenhaConfirm">
        Confirmação da senha
       </label>
-      <input autocomplete="new-password" class="border border-blue-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="registerSenhaConfirm" name="registerSenhaConfirm" placeholder="Confirme sua senha" required="" type="password"/>
-      <button class="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-md shadow-md transition" type="submit">
+      <input autocomplete="new-password" class="border border-blue-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-40 text-lg transition-shadow duration-300" id="registerSenhaConfirm" name="registerSenhaConfirm" placeholder="Confirme sua senha" required="" type="password"/>
+      <button class="bg-gradient-to-r from-blue-700 to-blue-900 hover:from-blue-800 hover:to-blue-950 text-white font-extrabold py-4 rounded-xl shadow-lg shadow-blue-500/40 focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50 transform transition-transform duration-300" type="submit">
        Registrar
       </button>
      </form>
@@ -103,96 +144,90 @@
    <!-- Dashboard Aprimorado -->
    <section aria-label="Página principal após login" class="hidden" id="dashboard">
     <!-- Header fixed -->
-    <header class="fixed top-0 left-0 w-full bg-white border-b border-blue-200 shadow-sm z-30" role="banner">
-     <div class="max-w-6xl mx-auto flex items-center justify-between px-6 py-3 sm:py-4">
-      <div class="flex items-center space-x-3">
-       <img alt="Logo pequeno do Justiça Digital, letras JD em branco sobre fundo azul escuro" class="object-contain rounded" height="40" src="https://storage.googleapis.com/a1aa/image/b50dafdc-7df1-4ff4-927b-8b85f137820f.jpg" width="40"/>
-       <span class="font-bold text-lg text-blue-900 select-none">
+    <header class="fixed top-0 left-0 w-full bg-white border-b border-blue-200 shadow-lg z-40 backdrop-blur-md bg-opacity-90" role="banner">
+     <div class="max-w-7xl mx-auto flex items-center justify-between px-8 py-4">
+      <div class="flex items-center space-x-4">
+       <img alt="Logo pequeno do Justiça Digital, letras JD em branco sobre fundo azul escuro" class="object-contain rounded-lg shadow-md" height="48" src="https://storage.googleapis.com/a1aa/image/b50dafdc-7df1-4ff4-927b-8b85f137820f.jpg" width="48"/>
+       <span class="font-extrabold text-2xl text-blue-900 select-none tracking-wide">
         Justiça Digital
        </span>
       </div>
-      <div class="flex items-center space-x-4">
-       <div class="flex items-center space-x-2">
-        <span class="text-blue-900 font-semibold select-none" id="userGreeting">
+      <div class="flex items-center space-x-6">
+       <div class="flex items-center space-x-3">
+        <span class="text-blue-900 font-semibold select-none text-lg" id="userGreeting">
          Olá, Maria!
         </span>
-        <div aria-label="Ícone de perfil do usuário" class="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center text-white text-lg font-semibold select-none" role="img" id="userInitial">
+        <div aria-label="Ícone de perfil do usuário" class="w-12 h-12 rounded-full bg-gradient-to-tr from-blue-700 to-blue-900 flex items-center justify-center text-white text-xl font-extrabold select-none shadow-lg" role="img" id="userInitial">
          M
         </div>
        </div>
-       <button aria-label="Sair do sistema" class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white transition rounded-md px-3 py-1 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-600" id="btnLogout" type="button">
+       <button aria-label="Sair do sistema" class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white transition rounded-xl px-5 py-2 text-base font-semibold focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50 shadow-md transform hover:scale-105" id="btnLogout" type="button">
         Sair
        </button>
       </div>
      </div>
     </header>
     <!-- Main content -->
-    <main class="flex-grow max-w-6xl mx-auto px-6 pt-24 pb-20 grid grid-cols-1 md:grid-cols-3 gap-8" role="main">
+    <main class="flex-grow max-w-7xl mx-auto px-8 pt-28 pb-24 grid grid-cols-1 md:grid-cols-3 gap-10" role="main">
      <!-- Card 1: Tutoriais -->
-     <section aria-labelledby="tutorialsTitle" class="bg-blue-50 rounded-lg shadow-md p-6 flex flex-col">
-      <div class="flex items-center mb-4 space-x-3">
-       <div aria-hidden="true" class="bg-blue-700 text-white rounded-md p-3 flex items-center justify-center">
-        <i class="fas fa-laptop fa-lg">
-        </i>
+     <section aria-labelledby="tutorialsTitle" class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-3xl shadow-2xl p-8 flex flex-col hover:shadow-blue-400/50 transition-shadow duration-500">
+      <div class="flex items-center mb-6 space-x-4">
+       <div aria-hidden="true" class="bg-blue-700 text-white rounded-2xl p-4 flex items-center justify-center shadow-lg">
+        <i class="fas fa-laptop fa-2x"></i>
        </div>
-       <h2 class="text-xl font-semibold text-blue-900 select-none" id="tutorialsTitle">
+       <h2 class="text-2xl font-extrabold text-blue-900 select-none" id="tutorialsTitle">
         Tutoriais Passo a Passo
        </h2>
       </div>
-      <p class="text-blue-800 mb-6 flex-grow select-text" id="tutorialsDescription">
+      <p class="text-blue-800 mb-8 flex-grow select-text text-lg leading-relaxed" id="tutorialsDescription">
        Aprenda a emitir documentos, acessar gov.br, benefícios sociais e
         acompanhar processos online.
       </p>
-      <button class="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-md shadow-md transition focus:outline-none focus:ring-2 focus:ring-blue-600" id="btnAccessTutorials" type="button">
+      <button class="bg-gradient-to-r from-blue-700 to-blue-900 hover:from-blue-800 hover:to-blue-950 text-white font-extrabold py-4 rounded-2xl shadow-lg shadow-blue-500/50 focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-60 transform transition-transform duration-300 hover:scale-105" id="btnAccessTutorials" type="button">
        Acessar Tutoriais
       </button>
      </section>
      <!-- Card 2: Agendar Oficina -->
-     <section aria-labelledby="workshopsTitle" class="bg-white rounded-lg shadow-md p-6 flex flex-col border border-blue-200">
-      <div class="flex items-center mb-4 space-x-3">
-       <div aria-hidden="true" class="bg-blue-700 text-white rounded-md p-3 flex items-center justify-center">
-        <i class="fas fa-calendar-alt fa-lg">
-        </i>
+     <section aria-labelledby="workshopsTitle" class="bg-white rounded-3xl shadow-2xl p-8 flex flex-col border border-blue-200 hover:shadow-blue-300/40 transition-shadow duration-500">
+      <div class="flex items-center mb-6 space-x-4">
+       <div aria-hidden="true" class="bg-blue-700 text-white rounded-2xl p-4 flex items-center justify-center shadow-lg">
+        <i class="fas fa-calendar-alt fa-2x"></i>
        </div>
-       <h2 class="text-xl font-semibold text-blue-900 select-none" id="workshopsTitle">
+       <h2 class="text-2xl font-extrabold text-blue-900 select-none" id="workshopsTitle">
         Oficinas e Aulas Práticas
        </h2>
       </div>
-      <p class="text-blue-800 mb-6 flex-grow select-text" id="workshopsDescription">
+      <p class="text-blue-800 mb-8 flex-grow select-text text-lg leading-relaxed" id="workshopsDescription">
        Participe de oficinas presenciais ou online e aprenda na prática.
       </p>
-      <button class="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-md shadow-md transition focus:outline-none focus:ring-2 focus:ring-blue-600" id="btnViewCalendar" type="button">
+      <button class="bg-gradient-to-r from-blue-700 to-blue-900 hover:from-blue-800 hover:to-blue-950 text-white font-extrabold py-4 rounded-2xl shadow-lg shadow-blue-500/50 focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-60 transform transition-transform duration-300 hover:scale-105" id="btnViewCalendar" type="button">
        Ver Calendário
       </button>
      </section>
      <!-- Card 3: Ajuda Rápida -->
-     <section aria-labelledby="supportTitle" class="bg-white rounded-lg shadow-md p-6 flex flex-col border border-blue-200">
-      <div class="flex items-center mb-4 space-x-3">
-       <div aria-hidden="true" class="bg-blue-700 text-white rounded-md p-3 flex items-center justify-center">
-        <i class="fas fa-headset fa-lg">
-        </i>
+     <section aria-labelledby="supportTitle" class="bg-white rounded-3xl shadow-2xl p-8 flex flex-col border border-blue-200 hover:shadow-blue-300/40 transition-shadow duration-500">
+      <div class="flex items-center mb-6 space-x-4">
+       <div aria-hidden="true" class="bg-blue-700 text-white rounded-2xl p-4 flex items-center justify-center shadow-lg">
+        <i class="fas fa-headset fa-2x"></i>
        </div>
-       <h2 class="text-xl font-semibold text-blue-900 select-none" id="supportTitle">
+       <h2 class="text-2xl font-extrabold text-blue-900 select-none" id="supportTitle">
         Suporte e Orientação
        </h2>
       </div>
-      <p class="text-blue-800 mb-6 flex-grow select-text" id="supportDescription">
+      <p class="text-blue-800 mb-8 flex-grow select-text text-lg leading-relaxed" id="supportDescription">
        Precisa de ajuda agora? Fale com a nossa equipe.
       </p>
-      <div class="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3">
-       <a aria-label="Entrar em contato via WhatsApp" class="flex items-center justify-center bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-md shadow-md transition focus:outline-none focus:ring-2 focus:ring-green-500" href="https://wa.me/5511999999999" rel="noopener noreferrer" target="_blank">
-        <i class="fab fa-whatsapp mr-2">
-        </i>
+      <div class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-6">
+       <a aria-label="Entrar em contato via WhatsApp" class="flex items-center justify-center bg-green-600 hover:bg-green-700 text-white font-extrabold py-3 rounded-2xl shadow-lg shadow-green-500/50 transition-transform duration-300 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-60 transform hover:scale-105" href="https://wa.me/5511999999999" rel="noopener noreferrer" target="_blank">
+        <i class="fab fa-whatsapp mr-3 text-2xl"></i>
         WhatsApp
        </a>
-       <a aria-label="Enviar e-mail para suporte" class="flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md shadow-md transition focus:outline-none focus:ring-2 focus:ring-blue-500" href="mailto:suporte@justicadigital.gov.br">
-        <i class="fas fa-envelope mr-2">
-        </i>
+       <a aria-label="Enviar e-mail para suporte" class="flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-3 rounded-2xl shadow-lg shadow-blue-500/50 transition-transform duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-60 transform hover:scale-105" href="mailto:suporte@justicadigital.gov.br">
+        <i class="fas fa-envelope mr-3 text-xl"></i>
         E-mail
        </a>
-       <button aria-label="Abrir chat online de suporte" class="flex items-center justify-center bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 rounded-md shadow-md transition focus:outline-none focus:ring-2 focus:ring-gray-400" id="btnOpenChat" type="button">
-        <i class="fas fa-comments mr-2">
-        </i>
+       <button aria-label="Abrir chat online de suporte" class="flex items-center justify-center bg-gray-400 hover:bg-gray-500 text-white font-extrabold py-3 rounded-2xl shadow-lg shadow-gray-400/50 transition-transform duration-300 focus:outline-none focus:ring-4 focus:ring-gray-400 focus:ring-opacity-60 transform hover:scale-105" id="btnOpenChat" type="button">
+        <i class="fas fa-comments mr-3 text-xl"></i>
         Chat Online
        </button>
       </div>
@@ -201,88 +236,87 @@
    </section>
   </div>
   <!-- Tutoriais Page (hidden by default) -->
-  <section aria-label="Página de tutoriais passo a passo" class="fixed inset-0 bg-white z-40 overflow-y-auto p-6 hidden" id="tutorialsPage">
-   <header class="flex items-center justify-between mb-6">
-    <h2 class="text-2xl font-bold text-blue-900">
+  <section aria-label="Página de tutoriais passo a passo" class="fixed inset-0 bg-white z-50 overflow-y-auto p-8 hidden" id="tutorialsPage">
+   <header class="flex items-center justify-between mb-8 max-w-5xl mx-auto">
+    <h2 class="text-3xl font-extrabold text-blue-900">
      Tutoriais Passo a Passo
     </h2>
-    <button aria-label="Fechar página de tutoriais" class="text-blue-700 hover:text-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-600 rounded" id="btnCloseTutorials">
-     <i class="fas fa-times fa-lg">
-     </i>
+    <button aria-label="Fechar página de tutoriais" class="text-blue-700 hover:text-blue-900 focus:outline-none focus:ring-4 focus:ring-blue-600 rounded-lg transition-colors duration-300" id="btnCloseTutorials" type="button">
+     <i class="fas fa-times fa-lg"></i>
     </button>
    </header>
-   <div class="max-w-4xl mx-auto space-y-8">
+   <div class="max-w-5xl mx-auto space-y-12">
     <article>
-     <h3 class="text-xl font-semibold text-blue-800 mb-3">
+     <h3 class="text-2xl font-extrabold text-blue-800 mb-6 border-b border-blue-200 pb-2">
       Documentos
      </h3>
-     <ul class="space-y-4">
-      <li class="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
-       <img alt="Thumbnail de vídeo tutorial sobre emissão de documentos, mostrando uma pessoa usando computador com documentos digitais na tela" class="rounded-md mb-2 sm:mb-0" height="80" src="https://storage.googleapis.com/a1aa/image/6d35f0bd-9957-4f52-1d78-3025ee7cc355.jpg" width="120"/>
-       <a class="text-blue-700 hover:underline font-medium" href="#">
+     <ul class="space-y-6">
+      <li class="flex flex-col sm:flex-row sm:items-center sm:space-x-6 bg-blue-50 rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow duration-300">
+       <img alt="Thumbnail de vídeo tutorial sobre emissão de documentos, mostrando uma pessoa usando computador com documentos digitais na tela" class="rounded-xl mb-4 sm:mb-0 w-full sm:w-40 h-24 object-cover shadow-md" height="96" src="https://storage.googleapis.com/a1aa/image/6d35f0bd-9957-4f52-1d78-3025ee7cc355.jpg" width="160"/>
+       <a class="text-blue-700 hover:underline font-semibold text-lg" href="#">
         Como emitir documentos digitais (vídeo)
        </a>
       </li>
-      <li class="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
-       <img alt="Capa de PDF ilustrado sobre emissão de documentos, com ícones de documentos e balança da justiça" class="rounded-md mb-2 sm:mb-0" height="80" src="https://storage.googleapis.com/a1aa/image/aa23e9a7-bdec-4570-65d6-559970d53eb7.jpg" width="120"/>
-       <a class="text-blue-700 hover:underline font-medium" href="#">
+      <li class="flex flex-col sm:flex-row sm:items-center sm:space-x-6 bg-blue-50 rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow duration-300">
+       <img alt="Capa de PDF ilustrado sobre emissão de documentos, com ícones de documentos e balança da justiça" class="rounded-xl mb-4 sm:mb-0 w-full sm:w-40 h-24 object-cover shadow-md" height="96" src="https://storage.googleapis.com/a1aa/image/aa23e9a7-bdec-4570-65d6-559970d53eb7.jpg" width="160"/>
+       <a class="text-blue-700 hover:underline font-semibold text-lg" href="#">
         Guia ilustrado para emissão de documentos (PDF)
        </a>
       </li>
      </ul>
     </article>
     <article>
-     <h3 class="text-xl font-semibold text-blue-800 mb-3">
+     <h3 class="text-2xl font-extrabold text-blue-800 mb-6 border-b border-blue-200 pb-2">
       Benefícios
      </h3>
-     <ul class="space-y-4">
-      <li class="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
-       <img alt="Thumbnail de vídeo tutorial sobre acesso a benefícios sociais, mostrando uma família feliz com documentos" class="rounded-md mb-2 sm:mb-0" height="80" src="https://storage.googleapis.com/a1aa/image/91598f5b-369c-4489-5e9b-2ece060b3cf1.jpg" width="120"/>
-       <a class="text-blue-700 hover:underline font-medium" href="#">
+     <ul class="space-y-6">
+      <li class="flex flex-col sm:flex-row sm:items-center sm:space-x-6 bg-blue-50 rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow duration-300">
+       <img alt="Thumbnail de vídeo tutorial sobre acesso a benefícios sociais, mostrando uma família feliz com documentos" class="rounded-xl mb-4 sm:mb-0 w-full sm:w-40 h-24 object-cover shadow-md" height="96" src="https://storage.googleapis.com/a1aa/image/91598f5b-369c-4489-5e9b-2ece060b3cf1.jpg" width="160"/>
+       <a class="text-blue-700 hover:underline font-semibold text-lg" href="#">
         Como acessar benefícios sociais (vídeo)
        </a>
       </li>
-      <li class="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
-       <img alt="Capa de PDF ilustrado sobre benefícios sociais, com ícones de mãos segurando coração e documentos" class="rounded-md mb-2 sm:mb-0" height="80" src="https://storage.googleapis.com/a1aa/image/513d93b4-f2cd-4139-35cd-8ef5db9aaa14.jpg" width="120"/>
-       <a class="text-blue-700 hover:underline font-medium" href="#">
+      <li class="flex flex-col sm:flex-row sm:items-center sm:space-x-6 bg-blue-50 rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow duration-300">
+       <img alt="Capa de PDF ilustrado sobre benefícios sociais, com ícones de mãos segurando coração e documentos" class="rounded-xl mb-4 sm:mb-0 w-full sm:w-40 h-24 object-cover shadow-md" height="96" src="https://storage.googleapis.com/a1aa/image/513d93b4-f2cd-4139-35cd-8ef5db9aaa14.jpg" width="160"/>
+       <a class="text-blue-700 hover:underline font-semibold text-lg" href="#">
         Guia ilustrado para benefícios sociais (PDF)
        </a>
       </li>
      </ul>
     </article>
     <article>
-     <h3 class="text-xl font-semibold text-blue-800 mb-3">
+     <h3 class="text-2xl font-extrabold text-blue-800 mb-6 border-b border-blue-200 pb-2">
       Processos
      </h3>
-     <ul class="space-y-4">
-      <li class="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
-       <img alt="Thumbnail de vídeo tutorial sobre acompanhamento de processos online, mostrando tela de computador com processos judiciais" class="rounded-md mb-2 sm:mb-0" height="80" src="https://storage.googleapis.com/a1aa/image/11318e50-bcda-448d-9f6a-8d3ecdbfb213.jpg" width="120"/>
-       <a class="text-blue-700 hover:underline font-medium" href="#">
+     <ul class="space-y-6">
+      <li class="flex flex-col sm:flex-row sm:items-center sm:space-x-6 bg-blue-50 rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow duration-300">
+       <img alt="Thumbnail de vídeo tutorial sobre acompanhamento de processos online, mostrando tela de computador com processos judiciais" class="rounded-xl mb-4 sm:mb-0 w-full sm:w-40 h-24 object-cover shadow-md" height="96" src="https://storage.googleapis.com/a1aa/image/11318e50-bcda-448d-9f6a-8d3ecdbfb213.jpg" width="160"/>
+       <a class="text-blue-700 hover:underline font-semibold text-lg" href="#">
         Como acompanhar processos online (vídeo)
        </a>
       </li>
-      <li class="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
-       <img alt="Capa de PDF ilustrado sobre acompanhamento de processos, com ícones de balança e documentos" class="rounded-md mb-2 sm:mb-0" height="80" src="https://storage.googleapis.com/a1aa/image/0130edc5-b437-4d2d-e9df-0e589fd5a163.jpg" width="120"/>
-       <a class="text-blue-700 hover:underline font-medium" href="#">
+      <li class="flex flex-col sm:flex-row sm:items-center sm:space-x-6 bg-blue-50 rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow duration-300">
+       <img alt="Capa de PDF ilustrado sobre acompanhamento de processos, com ícones de balança e documentos" class="rounded-xl mb-4 sm:mb-0 w-full sm:w-40 h-24 object-cover shadow-md" height="96" src="https://storage.googleapis.com/a1aa/image/0130edc5-b437-4d2d-e9df-0e589fd5a163.jpg" width="160"/>
+       <a class="text-blue-700 hover:underline font-semibold text-lg" href="#">
         Guia ilustrado para acompanhamento de processos (PDF)
        </a>
       </li>
      </ul>
     </article>
     <article>
-     <h3 class="text-xl font-semibold text-blue-800 mb-3">
+     <h3 class="text-2xl font-extrabold text-blue-800 mb-6 border-b border-blue-200 pb-2">
       Defensoria
      </h3>
-     <ul class="space-y-4">
-      <li class="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
-       <img alt="Thumbnail de vídeo tutorial sobre serviços da defensoria pública, mostrando advogado e cidadão em atendimento" class="rounded-md mb-2 sm:mb-0" height="80" src="https://storage.googleapis.com/a1aa/image/ec001c77-f3e3-4430-f9a6-17a5f6383262.jpg" width="120"/>
-       <a class="text-blue-700 hover:underline font-medium" href="#">
+     <ul class="space-y-6">
+      <li class="flex flex-col sm:flex-row sm:items-center sm:space-x-6 bg-blue-50 rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow duration-300">
+       <img alt="Thumbnail de vídeo tutorial sobre serviços da defensoria pública, mostrando advogado e cidadão em atendimento" class="rounded-xl mb-4 sm:mb-0 w-full sm:w-40 h-24 object-cover shadow-md" height="96" src="https://storage.googleapis.com/a1aa/image/ec001c77-f3e3-4430-f9a6-17a5f6383262.jpg" width="160"/>
+       <a class="text-blue-700 hover:underline font-semibold text-lg" href="#">
         Conheça a Defensoria Pública (vídeo)
        </a>
       </li>
-      <li class="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
-       <img alt="Capa de PDF ilustrado sobre defensoria pública, com ícones de advogado e balança da justiça" class="rounded-md mb-2 sm:mb-0" height="80" src="https://storage.googleapis.com/a1aa/image/ebf69ec9-2937-4312-9658-b107e91bbf54.jpg" width="120"/>
-       <a class="text-blue-700 hover:underline font-medium" href="#">
+      <li class="flex flex-col sm:flex-row sm:items-center sm:space-x-6 bg-blue-50 rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow duration-300">
+       <img alt="Capa de PDF ilustrado sobre defensoria pública, com ícones de advogado e balança da justiça" class="rounded-xl mb-4 sm:mb-0 w-full sm:w-40 h-24 object-cover shadow-md" height="96" src="https://storage.googleapis.com/a1aa/image/ebf69ec9-2937-4312-9658-b107e91bbf54.jpg" width="160"/>
+       <a class="text-blue-700 hover:underline font-semibold text-lg" href="#">
         Guia ilustrado da Defensoria Pública (PDF)
        </a>
       </li>
@@ -291,26 +325,25 @@
    </div>
   </section>
   <!-- Calendário Oficina Modal -->
-  <section aria-labelledby="calendarTitle" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50" id="calendarModal" role="dialog">
-   <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
-    <header class="flex items-center justify-between mb-6">
-     <h3 class="text-xl font-semibold text-blue-900 select-none" id="calendarTitle">
+  <section aria-labelledby="calendarTitle" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-6 opacity-0 pointer-events-none transition-opacity duration-300 z-50" id="calendarModal" role="dialog">
+   <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 max-h-[90vh] overflow-y-auto transform scale-95 transition-transform duration-300">
+    <header class="flex items-center justify-between mb-8">
+     <h3 class="text-2xl font-extrabold text-blue-900 select-none" id="calendarTitle">
       Calendário de Oficinas
      </h3>
-     <button aria-label="Fechar calendário de oficinas" class="text-blue-700 hover:text-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-600 rounded" id="btnCloseCalendar">
-      <i class="fas fa-times fa-lg">
-      </i>
+     <button aria-label="Fechar calendário de oficinas" class="text-blue-700 hover:text-blue-900 focus:outline-none focus:ring-4 focus:ring-blue-600 rounded-lg transition-colors duration-300" id="btnCloseCalendar" type="button">
+      <i class="fas fa-times fa-lg"></i>
      </button>
     </header>
-    <form class="flex flex-col space-y-4" id="calendarForm" novalidate="">
-     <label class="font-medium text-blue-900 select-none" for="calendarDate">
+    <form class="flex flex-col space-y-6" id="calendarForm" novalidate="">
+     <label class="font-semibold text-blue-900 select-none text-lg" for="calendarDate">
       Selecione a data
      </label>
-     <input class="border border-blue-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="calendarDate" name="calendarDate" required="" type="date"/>
-     <label class="font-medium text-blue-900 select-none" for="calendarType">
+     <input class="border border-blue-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-40 text-lg transition-shadow duration-300" id="calendarDate" name="calendarDate" required="" type="date"/>
+     <label class="font-semibold text-blue-900 select-none text-lg" for="calendarType">
       Tipo de oficina
      </label>
-     <select class="border border-blue-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="calendarType" name="calendarType" required="">
+     <select class="border border-blue-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-40 text-lg transition-shadow duration-300" id="calendarType" name="calendarType" required="">
       <option disabled="" selected="" value="">
        Selecione
       </option>
@@ -321,151 +354,56 @@
        Online
       </option>
      </select>
-     <button class="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-md shadow-md transition focus:outline-none focus:ring-2 focus:ring-blue-600" type="submit">
+     <button class="bg-gradient-to-r from-blue-700 to-blue-900 hover:from-blue-800 hover:to-blue-950 text-white font-extrabold py-4 rounded-2xl shadow-lg shadow-blue-500/50 focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-60 transform transition-transform duration-300 hover:scale-105" type="submit">
       Inscrever-se
      </button>
     </form>
    </div>
   </section>
   <!-- Chat Online Modal -->
-  <section aria-labelledby="chatTitle" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50" id="chatModal" role="dialog">
-   <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 max-h-[90vh] flex flex-col">
-    <header class="flex items-center justify-between mb-4">
-     <h3 class="text-xl font-semibold text-blue-900 select-none" id="chatTitle">
+  <section aria-labelledby="chatTitle" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-6 opacity-0 pointer-events-none transition-opacity duration-300 z-50" id="chatModal" role="dialog">
+   <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 max-h-[90vh] flex flex-col transform scale-95 transition-transform duration-300">
+    <header class="flex items-center justify-between mb-6">
+     <h3 class="text-2xl font-extrabold text-blue-900 select-none" id="chatTitle">
       Chat Online
      </h3>
-     <button aria-label="Fechar chat online" class="text-blue-700 hover:text-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-600 rounded" id="btnCloseChat">
-      <i class="fas fa-times fa-lg">
-      </i>
+     <button aria-label="Fechar chat online" class="text-blue-700 hover:text-blue-900 focus:outline-none focus:ring-4 focus:ring-blue-600 rounded-lg transition-colors duration-300" id="btnCloseChat" type="button">
+      <i class="fas fa-times fa-lg"></i>
      </button>
     </header>
-    <div aria-live="polite" class="flex-grow border border-blue-300 rounded-md p-3 mb-4 overflow-y-auto text-sm text-blue-900" id="chatMessages">
+    <div aria-live="polite" class="flex-grow border border-blue-300 rounded-2xl p-5 mb-6 overflow-y-auto text-base text-blue-900 scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-blue-100" id="chatMessages" style="scroll-behavior: smooth;">
      <p class="italic text-center text-gray-500 select-none">
       Chat iniciado. Como podemos ajudar?
      </p>
     </div>
-    <form class="flex space-x-3" id="chatForm" novalidate="">
-     <input aria-label="Campo para digitar mensagem do chat" autocomplete="off" class="flex-grow border border-blue-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="chatInput" name="chatInput" placeholder="Digite sua mensagem..." required="" type="text"/>
-     <button aria-label="Enviar mensagem do chat" class="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-4 rounded-md shadow-md transition focus:outline-none focus:ring-2 focus:ring-blue-600" type="submit">
+    <form class="flex space-x-4" id="chatForm" novalidate="">
+     <input aria-label="Campo para digitar mensagem do chat" autocomplete="off" class="flex-grow border border-blue-300 rounded-2xl px-5 py-3 focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-40 text-lg transition-shadow duration-300" id="chatInput" name="chatInput" placeholder="Digite sua mensagem..." required="" type="text"/>
+     <button aria-label="Enviar mensagem do chat" class="bg-gradient-to-r from-blue-700 to-blue-900 hover:from-blue-800 hover:to-blue-950 text-white font-extrabold px-6 rounded-2xl shadow-lg shadow-blue-500/50 focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-60 transform transition-transform duration-300 hover:scale-110" type="submit">
       Enviar
      </button>
     </form>
    </div>
   </section>
   <!-- Footer -->
-  <footer class="bg-blue-900 text-white fixed bottom-0 left-0 w-full flex flex-col sm:flex-row items-center justify-between px-6 py-3 space-y-3 sm:space-y-0" role="contentinfo">
-   <nav class="flex space-x-6 text-sm font-medium">
-    <a class="hover:underline focus:underline focus:outline-none" href="#">
+  <footer class="bg-gradient-to-r from-blue-900 to-blue-800 text-white w-full flex flex-col sm:flex-row items-center justify-between px-8 py-6 space-y-4 sm:space-y-0 shadow-inner mt-12" role="contentinfo">
+   <nav class="flex space-x-8 text-sm font-semibold tracking-wide">
+    <a class="hover:underline focus:underline focus:outline-none transition-colors duration-300" href="#">
      Sobre o Projeto
     </a>
-    <a class="hover:underline focus:underline focus:outline-none" href="#">
+    <a class="hover:underline focus:underline focus:outline-none transition-colors duration-300" href="#">
      Contato
     </a>
-    <a class="hover:underline focus:underline focus:outline-none" href="#">
+    <a class="hover:underline focus:underline focus:outline-none transition-colors duration-300" href="#">
      Política de Privacidade
     </a>
    </nav>
-   <div class="flex items-center space-x-2">
-    <img alt="Logo pequeno da AJJM em fundo azul escuro com letras brancas" class="w-10 h-10 object-contain" height="40" src="https://storage.googleapis.com/a1aa/image/15ca89ff-83dd-4319-a5bf-9702a4f2fb51.jpg" width="40"/>
-    <span class="text-sm font-semibold">
+   <div class="flex items-center space-x-3">
+    <img alt="Logo pequeno da AJJM em fundo azul escuro com letras brancas" class="w-12 h-12 object-contain rounded-lg shadow-md" height="48" src="https://storage.googleapis.com/a1aa/image/15ca89ff-83dd-4319-a5bf-9702a4f2fb51.jpg" width="48"/>
+    <span class="text-base font-extrabold tracking-wide select-none">
      AJJM
     </span>
    </div>
   </footer>
-
-  <!-- Botão flutuante de Leitura em Voz Alta -->
-  <button aria-label="Ativar leitura em voz alta" id="btnVoiceRead" class="fixed right-6 bottom-24 z-50 w-14 h-14 bg-blue-900 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-600 transition" title="Leitura em Voz Alta">
-   <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-    <path d="M12 1v14M9 5h6a3 3 0 01-6 0z" />
-    <rect x="9" y="15" width="6" height="6" rx="3" ry="3" />
-   </svg>
-  </button>
-
-  <!-- Card de controle da Leitura em Voz Alta -->
-  <section id="voiceReadCard" class="fixed bottom-6 right-6 z-50 w-80 max-w-full bg-white border border-blue-300 rounded-lg shadow-lg flex flex-col select-none text-blue-900 hidden" role="region" aria-label="Controle de leitura em voz alta">
-   <!-- Linha superior -->
-   <div class="flex items-center justify-between border-b border-blue-200 px-4 py-2">
-    <div class="flex items-center space-x-2">
-     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-      <path d="M12 1v14M9 5h6a3 3 0 01-6 0z" />
-      <rect x="9" y="15" width="6" height="6" rx="3" ry="3" />
-     </svg>
-     <span class="font-semibold text-blue-900">Leitura Ativa</span>
-    </div>
-    <button aria-label="Fechar controle de leitura em voz alta" id="btnCloseVoiceRead" class="text-blue-700 hover:text-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-600 rounded">
-     <i class="fas fa-times fa-sm"></i>
-    </button>
-   </div>
-   <!-- Linha central: controles principais -->
-   <div class="flex items-center justify-center space-x-8 py-4 border-b border-blue-200">
-    <button aria-label="Pausar ou continuar leitura" id="btnPlayPause" class="text-blue-900 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 rounded">
-     <svg id="iconPlayPause" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M6 4l12 8-12 8V4z" />
-     </svg>
-    </button>
-    <button aria-label="Parar leitura" id="btnStop" class="text-blue-900 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 rounded">
-     <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <rect x="6" y="6" width="12" height="12" rx="2" ry="2" />
-     </svg>
-    </button>
-   </div>
-   <!-- Linha inferior: configurações -->
-   <div class="flex items-center justify-between px-4 py-2">
-    <button aria-label="Abrir configurações de leitura" id="btnSettingsToggle" class="flex items-center space-x-2 text-blue-900 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 rounded">
-     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="3" />
-      <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33h.09a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51h.09a1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82v.09a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z" />
-     </svg>
-     <span class="text-sm font-medium">Configurações</span>
-    </button>
-   </div>
-   <!-- Menu de configurações -->
-   <div id="settingsMenu" class="px-4 pb-4 hidden border-t border-blue-200 space-y-4">
-    <!-- Voz -->
-    <div>
-     <label class="flex items-center space-x-2 cursor-pointer">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-700" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-       <path d="M12 1v14M9 5h6a3 3 0 01-6 0z" />
-       <rect x="9" y="15" width="6" height="6" rx="3" ry="3" />
-      </svg>
-      <span class="text-sm font-medium">Voz:</span>
-      <select id="voiceSelect" class="ml-2 border border-blue-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600">
-       <option value="female" selected>Feminina</option>
-       <option value="male">Masculina</option>
-      </select>
-     </label>
-    </div>
-    <!-- Velocidade -->
-    <div>
-     <label class="flex items-center space-x-2 cursor-pointer">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-700" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-       <path d="M3 12h18M12 3v18" />
-      </svg>
-      <span class="text-sm font-medium">Velocidade:</span>
-      <select id="rateSelect" class="ml-2 border border-blue-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600">
-       <option value="0.75">Lenta</option>
-       <option value="1" selected>Normal</option>
-       <option value="1.5">Rápida</option>
-      </select>
-     </label>
-    </div>
-    <!-- Timbre -->
-    <div>
-     <label class="flex items-center space-x-2 cursor-pointer">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-700" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-       <path d="M12 3v18M3 12h18" />
-      </svg>
-      <span class="text-sm font-medium">Timbre:</span>
-      <select id="pitchSelect" class="ml-2 border border-blue-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600">
-       <option value="0.75">Mais grave</option>
-       <option value="1" selected>Normal</option>
-       <option value="1.25">Mais agudo</option>
-      </select>
-     </label>
-    </div>
-   </div>
-  </section>
-
   <script>
    // Elements
     const btnEntrar = document.getElementById("btnEntrar");
@@ -476,226 +414,30 @@
     const closeRegister = document.getElementById("closeRegister");
     const homeSection = document.getElementById("home");
     const dashboardSection = document.getElementById("dashboard");
+    const tutorialsPage = document.getElementById("tutorialsPage");
+    const calendarModal = document.getElementById("calendarModal");
+    const chatModal = document.getElementById("chatModal");
 
-    // Voice Read Elements
-    const btnVoiceRead = document.getElementById("btnVoiceRead");
-    const voiceReadCard = document.getElementById("voiceReadCard");
-    const btnCloseVoiceRead = document.getElementById("btnCloseVoiceRead");
-    const btnPlayPause = document.getElementById("btnPlayPause");
-    const btnStop = document.getElementById("btnStop");
-    const btnSettingsToggle = document.getElementById("btnSettingsToggle");
-    const settingsMenu = document.getElementById("settingsMenu");
-    const voiceSelect = document.getElementById("voiceSelect");
-    const rateSelect = document.getElementById("rateSelect");
-    const pitchSelect = document.getElementById("pitchSelect");
-    const iconPlayPause = document.getElementById("iconPlayPause");
-
-    // Speech synthesis variables
-    let synth = window.speechSynthesis;
-    let utterance = null;
-    let isPlaying = false;
-    let isPaused = false;
-    let currentText = "";
-    let voices = [];
-    let selectedVoice = null;
-
-    // Load voices
-    function loadVoices() {
-      voices = synth.getVoices();
-      // Select voice based on gender preference
-      updateSelectedVoice();
+    // Helper to show modal with animation
+    function showModal(modal) {
+      modal.classList.remove("opacity-0", "pointer-events-none");
+      modal.classList.add("opacity-100");
+      const dialog = modal.querySelector("div");
+      dialog.classList.remove("scale-95");
+      dialog.classList.add("scale-100");
     }
-    if (speechSynthesis.onvoiceschanged !== undefined) {
-      speechSynthesis.onvoiceschanged = loadVoices;
+    // Helper to hide modal with animation
+    function hideModal(modal) {
+      modal.classList.add("opacity-0", "pointer-events-none");
+      modal.classList.remove("opacity-100");
+      const dialog = modal.querySelector("div");
+      dialog.classList.add("scale-95");
+      dialog.classList.remove("scale-100");
     }
-    loadVoices();
-
-    // Update selected voice based on voiceSelect value
-    function updateSelectedVoice() {
-      const gender = voiceSelect.value;
-      // Try to find voice matching gender and pt-BR locale
-      selectedVoice = voices.find(v => {
-        const langMatch = v.lang.toLowerCase().startsWith('pt');
-        const genderMatch = gender === 'female' ? /female|woman|girl/i.test(v.name) : /male|man|boy/i.test(v.name);
-        return langMatch && genderMatch;
-      });
-      // Fallback: any pt voice
-      if (!selectedVoice) {
-        selectedVoice = voices.find(v => v.lang.toLowerCase().startsWith('pt'));
-      }
-    }
-
-    // Function to speak text
-    function speakText(text) {
-      if (!text) return;
-      if (synth.speaking) {
-        synth.cancel();
-      }
-      utterance = new SpeechSynthesisUtterance(text);
-      utterance.voice = selectedVoice || null;
-      utterance.rate = parseFloat(rateSelect.value);
-      utterance.pitch = parseFloat(pitchSelect.value);
-      utterance.lang = selectedVoice ? selectedVoice.lang : 'pt-BR';
-
-      utterance.onstart = () => {
-        isPlaying = true;
-        isPaused = false;
-        updatePlayPauseIcon();
-      };
-      utterance.onend = () => {
-        isPlaying = false;
-        isPaused = false;
-        updatePlayPauseIcon();
-      };
-      utterance.onerror = () => {
-        isPlaying = false;
-        isPaused = false;
-        updatePlayPauseIcon();
-      };
-
-      synth.speak(utterance);
-    }
-
-    // Update play/pause icon
-    function updatePlayPauseIcon() {
-      if (isPlaying && !isPaused) {
-        // Show pause icon
-        iconPlayPause.innerHTML = '<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>';
-      } else {
-        // Show play icon
-        iconPlayPause.innerHTML = '<path d="M6 4l12 8-12 8V4z" />';
-      }
-    }
-
-    // Toggle play/pause
-    function togglePlayPause() {
-      if (!utterance) return;
-      if (isPlaying && !isPaused) {
-        synth.pause();
-        isPaused = true;
-      } else if (isPlaying && isPaused) {
-        synth.resume();
-        isPaused = false;
-      }
-      updatePlayPauseIcon();
-    }
-
-    // Stop speech
-    function stopSpeech() {
-      if (synth.speaking || isPaused) {
-        synth.cancel();
-        isPlaying = false;
-        isPaused = false;
-        updatePlayPauseIcon();
-      }
-    }
-
-    // Show voice read card and start welcome speech
-    btnVoiceRead.addEventListener("click", () => {
-      if (voiceReadCard.classList.contains("hidden")) {
-        voiceReadCard.classList.remove("hidden");
-        // Speak welcome message
-        currentText = "Tudo que você clicar será lido em voz alta. Use os botões abaixo para pausar, parar ou configurar a leitura.";
-        updateSelectedVoice();
-        speakText(currentText);
-      } else {
-        // If already open, close it
-        voiceReadCard.classList.add("hidden");
-        stopSpeech();
-      }
-    });
-
-    // Close voice read card
-    btnCloseVoiceRead.addEventListener("click", () => {
-      voiceReadCard.classList.add("hidden");
-      stopSpeech();
-    });
-
-    // Play/pause button
-    btnPlayPause.addEventListener("click", () => {
-      togglePlayPause();
-    });
-
-    // Stop button
-    btnStop.addEventListener("click", () => {
-      stopSpeech();
-    });
-
-    // Toggle settings menu
-    btnSettingsToggle.addEventListener("click", () => {
-      if (settingsMenu.classList.contains("hidden")) {
-        settingsMenu.classList.remove("hidden");
-      } else {
-        settingsMenu.classList.add("hidden");
-      }
-    });
-
-    // Update voice on change
-    voiceSelect.addEventListener("change", () => {
-      updateSelectedVoice();
-      if (isPlaying) {
-        stopSpeech();
-        speakText(currentText);
-      }
-    });
-
-    // Update rate on change
-    rateSelect.addEventListener("change", () => {
-      if (isPlaying) {
-        stopSpeech();
-        speakText(currentText);
-      }
-    });
-
-    // Update pitch on change
-    pitchSelect.addEventListener("change", () => {
-      if (isPlaying) {
-        stopSpeech();
-        speakText(currentText);
-      }
-    });
-
-    // Read aloud any clicked text content on the page (except controls)
-    document.body.addEventListener("click", (e) => {
-      if (voiceReadCard.classList.contains("hidden")) return; // Only active if card is visible
-      // Avoid reading if clicking on buttons or inputs inside the voiceReadCard or other controls
-      if (e.target.closest("#voiceReadCard") || e.target.closest("button") || e.target.closest("input") || e.target.closest("select") || e.target.closest("a")) return;
-      // Get text content of clicked element or its closest text container
-      let textToRead = "";
-      if (e.target.textContent && e.target.textContent.trim().length > 0) {
-        textToRead = e.target.textContent.trim();
-      } else {
-        // Try to find closest parent with text
-        let parent = e.target.parentElement;
-        while (parent && !textToRead) {
-          if (parent.textContent && parent.textContent.trim().length > 0) {
-            textToRead = parent.textContent.trim();
-          }
-          parent = parent.parentElement;
-        }
-      }
-      if (textToRead) {
-        currentText = textToRead;
-        updateSelectedVoice();
-        speakText(currentText);
-      }
-    });
-
-    // Existing app scripts...
-
-    // Elements
-    const btnEntrar = document.getElementById("btnEntrar");
-    const btnCriarConta = document.getElementById("btnCriarConta");
-    const loginModal = document.getElementById("login");
-    const registerModal = document.getElementById("register");
-    const closeLogin = document.getElementById("closeLogin");
-    const closeRegister = document.getElementById("closeRegister");
-    const homeSection = document.getElementById("home");
-    const dashboardSection = document.getElementById("dashboard");
 
     // Show login modal
     btnEntrar.addEventListener("click", () => {
-      loginModal.classList.remove("hidden");
+      showModal(loginModal);
       homeSection.classList.add("hidden");
       registerModal.classList.add("hidden");
       dashboardSection.classList.add("hidden");
@@ -704,7 +446,7 @@
 
     // Show register modal
     btnCriarConta.addEventListener("click", () => {
-      registerModal.classList.remove("hidden");
+      showModal(registerModal);
       homeSection.classList.add("hidden");
       loginModal.classList.add("hidden");
       dashboardSection.classList.add("hidden");
@@ -713,39 +455,34 @@
 
     // Close login modal
     closeLogin.addEventListener("click", () => {
-      loginModal.classList.add("hidden");
+      hideModal(loginModal);
       homeSection.classList.remove("hidden");
     });
 
     // Close register modal
     closeRegister.addEventListener("click", () => {
-      registerModal.classList.add("hidden");
+      hideModal(registerModal);
       homeSection.classList.remove("hidden");
     });
 
     // Login form submit
     document.getElementById("formLogin").addEventListener("submit", (e) => {
       e.preventDefault();
-      // Simple validation
       const emailCpf = e.target.loginEmailCpf.value.trim();
       const senha = e.target.loginSenha.value.trim();
       if (!emailCpf || !senha) {
         alert("Por favor, preencha todos os campos.");
         return;
       }
-      // Simulate login success
-      loginModal.classList.add("hidden");
+      hideModal(loginModal);
       homeSection.classList.add("hidden");
       dashboardSection.classList.remove("hidden");
 
-      // Set user name and initial dynamically (example: from email or CPF)
       let userName = "Maria";
-      // If emailCpf looks like an email, extract name before @, else fallback
       if (emailCpf.includes("@")) {
         const namePart = emailCpf.split("@")[0];
         userName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
       }
-      // Update greeting and initial
       document.getElementById("userGreeting").textContent = `Olá, ${userName}!`;
       document.getElementById("userInitial").textContent = userName.charAt(0).toUpperCase();
     });
@@ -770,12 +507,10 @@
         alert("As senhas não coincidem.");
         return;
       }
-      // Simulate registration success
-      registerModal.classList.add("hidden");
+      hideModal(registerModal);
       homeSection.classList.add("hidden");
       dashboardSection.classList.remove("hidden");
 
-      // Update greeting and initial with registered name
       const userName = nome.split(" ")[0] || nome;
       document.getElementById("userGreeting").textContent = `Olá, ${userName}!`;
       document.getElementById("userInitial").textContent = userName.charAt(0).toUpperCase();
@@ -792,7 +527,7 @@
       }
       alert(`Inscrição realizada para oficina ${type} na data ${date}.`);
       e.target.reset();
-      document.getElementById("calendarModal").classList.add("hidden");
+      hideModal(calendarModal);
     });
 
     // Logout button (reload page to simulate logout)
@@ -804,36 +539,36 @@
 
     // Open tutorials page
     document.getElementById("btnAccessTutorials").addEventListener("click", () => {
-      document.getElementById("tutorialsPage").classList.remove("hidden");
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      tutorialsPage.classList.remove("hidden");
+      tutorialsPage.scrollTo({ top: 0, behavior: "smooth" });
     });
 
     // Close tutorials page
     document.getElementById("btnCloseTutorials").addEventListener("click", () => {
-      document.getElementById("tutorialsPage").classList.add("hidden");
+      tutorialsPage.classList.add("hidden");
     });
 
     // Open calendar modal
     document.getElementById("btnViewCalendar").addEventListener("click", () => {
-      document.getElementById("calendarModal").classList.remove("hidden");
+      showModal(calendarModal);
       document.getElementById("calendarDate").focus();
     });
 
     // Close calendar modal
     document.getElementById("btnCloseCalendar").addEventListener("click", () => {
-      document.getElementById("calendarModal").classList.add("hidden");
+      hideModal(calendarModal);
       document.getElementById("calendarForm").reset();
     });
 
     // Open chat modal
     document.getElementById("btnOpenChat").addEventListener("click", () => {
-      document.getElementById("chatModal").classList.remove("hidden");
+      showModal(chatModal);
       document.getElementById("chatInput").focus();
     });
 
     // Close chat modal
     document.getElementById("btnCloseChat").addEventListener("click", () => {
-      document.getElementById("chatModal").classList.add("hidden");
+      hideModal(chatModal);
       document.getElementById("chatForm").reset();
       document.getElementById("chatMessages").innerHTML =
         '<p class="italic text-center text-gray-500 select-none">Chat iniciado. Como podemos ajudar?</p>';
@@ -846,21 +581,19 @@
       const chatMessages = document.getElementById("chatMessages");
       const msg = chatInput.value.trim();
       if (!msg) return;
-      // Append user message
       const userMsg = document.createElement("p");
       userMsg.className =
-        "text-right text-blue-900 bg-blue-100 rounded-md p-2 mb-2 max-w-xs ml-auto";
+        "text-right text-blue-900 bg-blue-100 rounded-2xl p-3 mb-3 max-w-xs ml-auto shadow-sm";
       userMsg.textContent = msg;
       chatMessages.appendChild(userMsg);
       chatMessages.scrollTop = chatMessages.scrollHeight;
       chatInput.value = "";
       chatInput.focus();
 
-      // Simulate bot reply after 1s
       setTimeout(() => {
         const botMsg = document.createElement("p");
         botMsg.className =
-          "text-left text-gray-800 bg-gray-200 rounded-md p-2 mb-2 max-w-xs";
+          "text-left text-gray-800 bg-gray-200 rounded-2xl p-3 mb-3 max-w-xs shadow-sm";
         botMsg.textContent =
           "Obrigado por sua mensagem! Em breve, um atendente entrará em contato.";
         chatMessages.appendChild(botMsg);
@@ -871,30 +604,26 @@
     // Accessibility: close modals on Escape key
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
-        if (!loginModal.classList.contains("hidden")) {
-          loginModal.classList.add("hidden");
+        if (!loginModal.classList.contains("opacity-0")) {
+          hideModal(loginModal);
           homeSection.classList.remove("hidden");
         }
-        if (!registerModal.classList.contains("hidden")) {
-          registerModal.classList.add("hidden");
+        if (!registerModal.classList.contains("opacity-0")) {
+          hideModal(registerModal);
           homeSection.classList.remove("hidden");
         }
-        if (!document.getElementById("tutorialsPage").classList.contains("hidden")) {
-          document.getElementById("tutorialsPage").classList.add("hidden");
+        if (!tutorialsPage.classList.contains("hidden")) {
+          tutorialsPage.classList.add("hidden");
         }
-        if (!document.getElementById("calendarModal").classList.contains("hidden")) {
-          document.getElementById("calendarModal").classList.add("hidden");
+        if (!calendarModal.classList.contains("opacity-0")) {
+          hideModal(calendarModal);
           document.getElementById("calendarForm").reset();
         }
-        if (!document.getElementById("chatModal").classList.contains("hidden")) {
-          document.getElementById("chatModal").classList.add("hidden");
+        if (!chatModal.classList.contains("opacity-0")) {
+          hideModal(chatModal);
           document.getElementById("chatForm").reset();
           document.getElementById("chatMessages").innerHTML =
             '<p class="italic text-center text-gray-500 select-none">Chat iniciado. Como podemos ajudar?</p>';
-        }
-        if (!voiceReadCard.classList.contains("hidden")) {
-          voiceReadCard.classList.add("hidden");
-          stopSpeech();
         }
       }
     });
