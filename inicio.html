@@ -1,63 +1,344 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fila virtual</title>
-    <link rel="stylesheet" href="styleinicio.css">
-    
-
-</head><body>
-    <div id="conteudo1">
-        <div id="logo">
-            <div id="logo2">
-                <img src="img/CORAÇAO AZUL.png" alt=""
-                    style="width: 390px; border:none; border-radius: 0%; height: 130px; margin-top: 0px; ">
-                </div>
-           
-            </div>
-        </div>
-        <div id="usuario">
-            /* COLOCAR A IMAGEM ESTATICA DE FUNDO */
-            <img id="minhaImagem" src="" alt="">
-           
-
-
-            <div id="ft"><img src="img/MicrosoftTeams-image.png" alt="" style="width: 200px; height: 200px; border-radius: 50%; display: flex; justify-content: center; margin-top: 140px;" ></div>
-            <div id="texto"><p>Olá, usuário</p></div>
-            
-        </div>
-        <div id="texto2" style="display: flex; justify-content: center; align-items: center;">
-            <img src="img/O que você deseja  AZUL.png" alt="" style="width: 550px; height: 170px;">
-        </div>
-        
-        <div id="funçao">
-          <button class="none"> <a href="emergencia.html"> <div id="funçao1"><img src="img/emergencia.png"alt=""
-            style="width: 150px; border:none; border-radius: 10%; height: 150px; margin-top: 13px; margin-left: 80px; ">
-                
-        </div></a></button>
-
-           <button class="none"><a href="emergencia.html"><div id="funçao2"><img src="img/icone2.png"alt=""
-            style="width: 150px; border:none; border-radius: 10%; height: 150px; margin-top: 13px; margin-left: 80px; ">
-
-        </div></a></button> 
-
-            <button class="none"><a href="map.html"><div id="funçao3"><img src="img/icone3.png"alt=""
-                style="width: 150px; border:none; border-radius: 10%; height: 150px; margin-top: 13px; margin-left: 80px; ">
-
-                
-            </div></a></button>
-
-            <button class="none"><a href="emergencia.html"><div id="funçao4"><img src="img/icone4.png"alt=""
-                style="width: 150px; border:none; border-radius: 10%; height: 150px; margin-top: 13px; margin-left: 80px; ">
-
-                </div></a></button>
-
-            </div>
-        </div>
+<html class="scroll-smooth" lang="pt-BR">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Justiça Digital
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <style>
+   body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+ </head>
+ <body class="bg-white text-blue-900 min-h-screen flex flex-col">
+  <!-- Main container for all pages -->
+  <div class="flex-grow flex flex-col" id="app">
+   <!-- Home Screen -->
+   <section class="flex flex-col items-center justify-center flex-grow px-6 text-center max-w-lg mx-auto" id="home">
+    <img alt="Logo do projeto Justiça Digital com ícone de balança estilizada em azul escuro sobre fundo branco" class="mx-auto mb-6 w-36 h-36 object-contain" height="150" src="https://storage.googleapis.com/a1aa/image/7d6a91df-2b24-4e51-b878-57a83b1c53d7.jpg" width="150"/>
+    <h1 class="text-xl sm:text-2xl font-semibold mb-10 max-w-xs mx-auto text-blue-900">
+     Transformando inclusão digital em acesso a direitos.
+    </h1>
+    <div class="flex flex-col sm:flex-row gap-6 w-full max-w-xs">
+     <button aria-label="Entrar no sistema" class="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-md shadow-md transition" id="btnEntrar">
+      Entrar
+     </button>
+     <button aria-label="Criar nova conta" class="bg-white border-2 border-blue-700 text-blue-700 font-semibold py-3 rounded-md shadow-md hover:bg-blue-50 transition" id="btnCriarConta">
+      Criar Conta
+     </button>
     </div>
-    
+   </section>
+   <!-- Login Modal -->
+   <section aria-describedby="loginDesc" aria-labelledby="loginTitle" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden" id="login" role="dialog">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+     <button aria-label="Fechar formulário de login" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 focus:outline-none" id="closeLogin">
+      <i class="fas fa-times fa-lg">
+      </i>
+     </button>
+     <h2 class="text-2xl font-semibold text-blue-900 mb-4 text-center" id="loginTitle">
+      Entrar
+     </h2>
+     <form class="flex flex-col gap-4" id="formLogin" novalidate="">
+      <label class="text-blue-900 font-medium" for="loginEmailCpf">
+       E-mail ou CPF
+      </label>
+      <input autocomplete="username" class="border border-blue-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="loginEmailCpf" inputmode="text" name="loginEmailCpf" placeholder="Digite seu e-mail ou CPF" required="" type="text"/>
+      <label class="text-blue-900 font-medium" for="loginSenha">
+       Senha
+      </label>
+      <input autocomplete="current-password" class="border border-blue-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="loginSenha" name="loginSenha" placeholder="Digite sua senha" required="" type="password"/>
+      <button class="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-md shadow-md transition" type="submit">
+       Acessar
+      </button>
+      <div class="text-right">
+       <a class="text-sm text-blue-700 hover:underline" href="#" id="forgotPasswordLink">
+        Esqueci minha senha
+       </a>
+      </div>
+     </form>
+    </div>
+   </section>
+   <!-- Register Modal -->
+   <section aria-describedby="registerDesc" aria-labelledby="registerTitle" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden" id="register" role="dialog">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative overflow-y-auto max-h-[90vh]">
+     <button aria-label="Fechar formulário de registro" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 focus:outline-none" id="closeRegister">
+      <i class="fas fa-times fa-lg">
+      </i>
+     </button>
+     <h2 class="text-2xl font-semibold text-blue-900 mb-4 text-center" id="registerTitle">
+      Criar Conta
+     </h2>
+     <form class="flex flex-col gap-4" id="formRegister" novalidate="">
+      <label class="text-blue-900 font-medium" for="registerNome">
+       Nome completo
+      </label>
+      <input autocomplete="name" class="border border-blue-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="registerNome" name="registerNome" placeholder="Digite seu nome completo" required="" type="text"/>
+      <label class="text-blue-900 font-medium" for="registerEmail">
+       E-mail
+      </label>
+      <input autocomplete="email" class="border border-blue-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="registerEmail" name="registerEmail" placeholder="Digite seu e-mail" required="" type="email"/>
+      <label class="text-blue-900 font-medium" for="registerCPF">
+       CPF
+      </label>
+      <input class="border border-blue-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="registerCPF" inputmode="numeric" maxlength="11" name="registerCPF" pattern="\d{11}" placeholder="Digite seu CPF (somente números)" required="" type="text"/>
+      <label class="text-blue-900 font-medium" for="registerSenha">
+       Senha
+      </label>
+      <input autocomplete="new-password" class="border border-blue-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="registerSenha" name="registerSenha" placeholder="Digite sua senha" required="" type="password"/>
+      <label class="text-blue-900 font-medium" for="registerSenhaConfirm">
+       Confirmação da senha
+      </label>
+      <input autocomplete="new-password" class="border border-blue-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="registerSenhaConfirm" name="registerSenhaConfirm" placeholder="Confirme sua senha" required="" type="password"/>
+      <button class="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-md shadow-md transition" type="submit">
+       Registrar
+      </button>
+     </form>
+    </div>
+   </section>
+   <!-- Dashboard Page -->
+   <section aria-label="Página principal após login" class="hidden flex flex-col flex-grow max-w-5xl mx-auto px-6 py-8 space-y-8" id="dashboard">
+    <header class="mb-6 text-center">
+     <h1 class="text-3xl font-bold text-blue-900">
+      Bem-vindo(a) à Justiça Digital
+     </h1>
+    </header>
+    <main class="grid grid-cols-1 md:grid-cols-3 gap-8">
+     <!-- Card 1: Tutoriais -->
+     <article aria-labelledby="tutorialsTitle" class="bg-white rounded-lg shadow-md p-6 flex flex-col">
+      <h2 class="text-xl font-semibold text-blue-900 mb-4" id="tutorialsTitle">
+       <i class="fas fa-book-open mr-2 text-blue-700">
+       </i>
+       Tutoriais
+      </h2>
+      <p class="text-blue-800 mb-4 flex-grow">
+       Acesso a guias passo a passo para emitir documentos, usar gov.br, acessar benefícios e acompanhar processos.
+      </p>
+      <ul class="list-disc list-inside space-y-2 text-blue-700">
+       <li>
+        <a class="hover:underline" href="#">
+         Emitir documentos
+        </a>
+       </li>
+       <li>
+        <a class="hover:underline" href="#">
+         Usar gov.br
+        </a>
+       </li>
+       <li>
+        <a class="hover:underline" href="#">
+         Acessar benefícios
+        </a>
+       </li>
+       <li>
+        <a class="hover:underline" href="#">
+         Acompanhar processos
+        </a>
+       </li>
+      </ul>
+     </article>
+     <!-- Card 2: Agendar Oficina -->
+     <article aria-labelledby="workshopTitle" class="bg-white rounded-lg shadow-md p-6 flex flex-col">
+      <h2 class="text-xl font-semibold text-blue-900 mb-4" id="workshopTitle">
+       <i class="fas fa-calendar-alt mr-2 text-blue-700">
+       </i>
+       Agendar Oficina
+      </h2>
+      <p class="text-blue-800 mb-4 flex-grow">
+       Calendário simples para se inscrever em oficinas presenciais ou online.
+      </p>
+      <form aria-label="Formulário para agendar oficina" class="flex flex-col space-y-4" id="workshopForm">
+       <label class="font-medium text-blue-900" for="workshopDate">
+        Escolha a data da oficina
+       </label>
+       <input aria-required="true" class="border border-blue-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="workshopDate" name="workshopDate" required="" type="date"/>
+       <label class="font-medium text-blue-900" for="workshopType">
+        Tipo de oficina
+       </label>
+       <select aria-required="true" class="border border-blue-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" id="workshopType" name="workshopType" required="">
+        <option disabled="" selected="" value="">
+         Selecione
+        </option>
+        <option value="presencial">
+         Presencial
+        </option>
+        <option value="online">
+         Online
+        </option>
+       </select>
+       <button class="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-md shadow-md transition" type="submit">
+        Inscrever-se
+       </button>
+      </form>
+     </article>
+     <!-- Card 3: Ajuda Rápida -->
+     <article aria-labelledby="helpTitle" class="bg-white rounded-lg shadow-md p-6 flex flex-col">
+      <h2 class="text-xl font-semibold text-blue-900 mb-4" id="helpTitle">
+       <i class="fas fa-headset mr-2 text-blue-700">
+       </i>
+       Ajuda Rápida
+      </h2>
+      <p class="text-blue-800 mb-4 flex-grow">
+       Contatos de suporte para tirar dúvidas e obter ajuda.
+      </p>
+      <ul class="space-y-3 text-blue-700">
+       <li class="flex items-center space-x-3">
+        <i class="fab fa-whatsapp fa-lg">
+        </i>
+        <a class="hover:underline" href="https://wa.me/5511999999999" rel="noopener noreferrer" target="_blank">
+         WhatsApp: (11) 99999-9999
+        </a>
+       </li>
+       <li class="flex items-center space-x-3">
+        <i class="fas fa-envelope fa-lg">
+        </i>
+        <a class="hover:underline" href="mailto:suporte@justicadigital.gov.br">
+         suporte@justicadigital.gov.br
+        </a>
+       </li>
+       <li class="flex items-center space-x-3">
+        <i class="fas fa-comments fa-lg">
+        </i>
+        <a aria-label="Abrir chat básico de suporte" class="hover:underline" href="#">
+         Chat básico
+        </a>
+       </li>
+      </ul>
+     </article>
+    </main>
+   </section>
+  </div>
+  <!-- Footer -->
+  <footer class="bg-blue-900 text-white fixed bottom-0 left-0 w-full flex flex-col sm:flex-row items-center justify-between px-6 py-3 space-y-3 sm:space-y-0" role="contentinfo">
+   <nav class="flex space-x-6 text-sm font-medium">
+    <a class="hover:underline focus:underline focus:outline-none" href="#">
+     Sobre o Projeto
+    </a>
+    <a class="hover:underline focus:underline focus:outline-none" href="#">
+     Contato
+    </a>
+    <a class="hover:underline focus:underline focus:outline-none" href="#">
+     Política de Privacidade
+    </a>
+   </nav>
+   <div class="flex items-center space-x-2">
+    <img alt="Logo pequeno da AJJM em fundo azul escuro com letras brancas" class="w-10 h-10 object-contain" height="40" src="https://storage.googleapis.com/a1aa/image/15ca89ff-83dd-4319-a5bf-9702a4f2fb51.jpg" width="40"/>
+    <span class="text-sm font-semibold">
+     AJJM
+    </span>
+   </div>
+  </footer>
+  <script>
+   // Elements
+    const btnEntrar = document.getElementById('btnEntrar');
+    const btnCriarConta = document.getElementById('btnCriarConta');
+    const loginModal = document.getElementById('login');
+    const registerModal = document.getElementById('register');
+    const closeLogin = document.getElementById('closeLogin');
+    const closeRegister = document.getElementById('closeRegister');
+    const homeSection = document.getElementById('home');
+    const dashboardSection = document.getElementById('dashboard');
 
-</html>
+    // Show login modal
+    btnEntrar.addEventListener('click', () => {
+      loginModal.classList.remove('hidden');
+      homeSection.classList.add('hidden');
+      registerModal.classList.add('hidden');
+      dashboardSection.classList.add('hidden');
+      document.getElementById('loginEmailCpf').focus();
+    });
 
+    // Show register modal
+    btnCriarConta.addEventListener('click', () => {
+      registerModal.classList.remove('hidden');
+      homeSection.classList.add('hidden');
+      loginModal.classList.add('hidden');
+      dashboardSection.classList.add('hidden');
+      document.getElementById('registerNome').focus();
+    });
+
+    // Close login modal
+    closeLogin.addEventListener('click', () => {
+      loginModal.classList.add('hidden');
+      homeSection.classList.remove('hidden');
+    });
+
+    // Close register modal
+    closeRegister.addEventListener('click', () => {
+      registerModal.classList.add('hidden');
+      homeSection.classList.remove('hidden');
+    });
+
+    // Login form submit
+    document.getElementById('formLogin').addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Simple validation
+      const emailCpf = e.target.loginEmailCpf.value.trim();
+      const senha = e.target.loginSenha.value.trim();
+      if (!emailCpf || !senha) {
+        alert('Por favor, preencha todos os campos.');
+        return;
+      }
+      // Simulate login success
+      loginModal.classList.add('hidden');
+      dashboardSection.classList.remove('hidden');
+    });
+
+    // Register form submit
+    document.getElementById('formRegister').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nome = e.target.registerNome.value.trim();
+      const email = e.target.registerEmail.value.trim();
+      const cpf = e.target.registerCPF.value.trim();
+      const senha = e.target.registerSenha.value;
+      const senhaConfirm = e.target.registerSenhaConfirm.value;
+      if (!nome || !email || !cpf || !senha || !senhaConfirm) {
+        alert('Por favor, preencha todos os campos.');
+        return;
+      }
+      if (cpf.length !== 11 || !/^\d{11}$/.test(cpf)) {
+        alert('CPF deve conter 11 números.');
+        return;
+      }
+      if (senha !== senhaConfirm) {
+        alert('As senhas não coincidem.');
+        return;
+      }
+      // Simulate registration success
+      registerModal.classList.add('hidden');
+      dashboardSection.classList.remove('hidden');
+    });
+
+    // Workshop form submit
+    document.getElementById('workshopForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const date = e.target.workshopDate.value;
+      const type = e.target.workshopType.value;
+      if (!date || !type) {
+        alert('Por favor, selecione a data e o tipo da oficina.');
+        return;
+      }
+      alert(`Inscrição realizada para oficina ${type} na data ${date}.`);
+      e.target.reset();
+    });
+
+    // Accessibility: close modals on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (!loginModal.classList.contains('hidden')) {
+          loginModal.classList.add('hidden');
+          homeSection.classList.remove('hidden');
+        }
+        if (!registerModal.classList.contains('hidden')) {
+          registerModal.classList.add('hidden');
+          homeSection.classList.remove('hidden');
+        }
+      }
+    });
+  </script>
+ </body>
 </html>
