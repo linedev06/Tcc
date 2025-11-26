@@ -1,8 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Baxter: Controle total com inteligência artificial operacional para decisões críticas e análise global.">
     <title>BAXTER | CONTROLE TOTAL</title>
     <style>
         /* Reset e base */
@@ -22,7 +24,7 @@
             scroll-behavior: smooth;
         }
 
-        /* Cursor customizado com distorsão */
+        /* Cursor customizado com distorsão sutil */
         .cursor {
             position: fixed;
             width: 20px;
@@ -32,6 +34,21 @@
             pointer-events: none;
             z-index: 9999;
             transition: transform 0.1s ease;
+        }
+        .cursor::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(42, 107, 255, 0.2);
+            transform: scale(0);
+            transition: transform 0.1s ease;
+        }
+        .cursor:hover::before {
+            transform: scale(1.5);
         }
 
         /* Animação de entrada */
@@ -91,11 +108,15 @@
             z-index: 100;
             opacity: 0;
             animation: fadeIn 0.5s ease-in-out 3s forwards;
+            background: rgba(0, 0, 0, 0.8); /* Semi-transparent for overlay */
         }
         .logo {
             font-size: 1.5rem;
             font-weight: 300;
             letter-spacing: 0.1em;
+        }
+        nav {
+            display: flex; /* Visível em desktop */
         }
         nav ul {
             list-style: none;
@@ -120,8 +141,93 @@
             background: linear-gradient(to right, #2A6BFF, #8B2AFF);
             transition: width 0.3s ease;
         }
-        nav a:hover::after {
+        nav a:hover::after, nav a:focus::after {
             width: 100%;
+        }
+
+        /* Hambúrguer Menu */
+        .hamburger {
+            display: none; /* Oculto por padrão */
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 20px;
+            cursor: pointer;
+            padding: 5px;
+            border: none;
+            background: transparent;
+            position: relative;
+        }
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, #2A6BFF, #8B2AFF);
+            border-radius: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 3px rgba(42, 107, 255, 0.3); /* Brilho sutil para sofisticação */
+        }
+        .hamburger.open span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.open span:nth-child(2) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Overlay do Menu Mobile */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 150;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        .nav-overlay ul {
+            list-style: none;
+            text-align: center;
+        }
+        .nav-overlay li {
+            margin: 1rem 0;
+        }
+        .nav-overlay a {
+            font-size: 1.5rem;
+            color: #FFFFFF;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .nav-overlay a:hover, .nav-overlay a:focus {
+            color: #2A6BFF;
+        }
+
+        /* Seções gerais */
+        section {
+            min-height: 100vh;
+            padding: 5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        section h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+        section p {
+            font-size: 1.2rem;
+            font-weight: 200;
+            max-width: 800px;
+            line-height: 1.6;
+            margin-bottom: 2rem;
         }
 
         /* Hero Section */
@@ -179,9 +285,42 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        .btn:hover {
+        .btn:hover, .btn:focus {
             background: linear-gradient(to right, #2A6BFF, #8B2AFF);
             box-shadow: 0 0 20px rgba(42, 107, 255, 0.5);
+            outline: none;
+        }
+
+        /* Modal para ativação */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: #111;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 400px;
+        }
+        .modal-content h3 {
+            margin-bottom: 1rem;
+        }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
         }
 
         /* Partículas sutis */
@@ -206,6 +345,13 @@
             background: rgba(139, 42, 255, 0.3);
         }
 
+        /* Footer */
+        footer {
+            padding: 2rem;
+            text-align: center;
+            background: #111;
+        }
+
         /* Animações */
         @keyframes fadeOut {
             to { opacity: 0; visibility: hidden; }
@@ -214,7 +360,7 @@
             to { width: 200px; }
         }
         @keyframes formSymbol {
-            to { clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+            to { clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); } /* Forma uma estrela aproximada */
         }
         @keyframes appear {
             to { opacity: 1; }
@@ -237,7 +383,9 @@
             .brand p { font-size: 1rem; }
             .hero h2 { font-size: 2rem; }
             .hero p { font-size: 1rem; }
-            nav ul { gap: 1rem; }
+            nav { display: none; } /* Esconde nav em mobile */
+            .hamburger { display: flex; } /* Mostra hambúrguer */
+            section h2 { font-size: 2rem; }
         }
     </style>
 </head>
@@ -264,50 +412,77 @@
                 <li><a href="#contato">Contato</a></li>
             </ul>
         </nav>
+        <!-- Hambúrguer Menu -->
+        <button class="hamburger" aria-label="Abrir menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+        </button>
     </header>
 
+    <!-- Overlay do Menu Mobile -->
+    <div class="nav-overlay">
+        <ul>
+            <li><a href="#tecnologia">Tecnologia</a></li>
+            <li><a href="#plataforma">Plataforma</a></li>
+            <li><a href="#seguranca">Segurança</a></li>
+            <li><a href="#contato">Contato</a></li>
+        </ul>
+    </div>
+
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="hero">
         <div class="hero-symbol"></div>
         <h2>Controle total sobre tudo que importa.</h2>
         <p>Baxter é a primeira inteligência artificial operacional projetada para decisões críticas, coordenação autônoma e análise instantânea em escala global. Precisão absoluta. Eficiência contínua. Controle sem limites.</p>
-        <button class="btn">Ativar Baxter</button>
+        <button class="btn" id="activateBtn">Ativar Baxter</button>
         <div class="particles">
             <!-- Partículas geradas dinamicamente via JS -->
         </div>
     </section>
 
-    <!-- Cursor customizado -->
-    <div class="cursor"></div>
+    <!-- Seção Tecnologia -->
+    <section id="tecnologia">
+        <h2>Tecnologia Avançada</h2>
+        <p>Baseada em algoritmos de aprendizado profundo e processamento quântico, Baxter oferece análise preditiva em tempo real, adaptando-se a cenários dinâmicos para maximizar eficiência e minimizar riscos.</p>
+    </section>
 
+    <!-- Seção Plataforma -->
+    <section id="plataforma">
+        <h2>Plataforma Integrada</h2>
+        <p>Uma interface unificada para controle global, com APIs abertas e integração seamless com sistemas existentes. Coordenação autônoma em redes distribuídas, garantindo operações 24/7.</p>
+    </section>
+
+    <!-- Seção Segurança -->
+    <section id="seguranca">
+        <h2>Segurança Inquebrável</h2>
+        <p>Proteção de ponta a ponta com criptografia quântica e monitoramento contínuo. Baxter detecta ameaças antes que ocorram, assegurando controle total sem vulnerabilidades.</p>
+    </section>
+
+    <!-- Seção Contato -->
+    <section id="contato">
+        <h2>Entre em contato </h2> 
+
+  </section>
+
+    
+
+    <!-- SCRIPT DO HAMBÚRGUER -->
     <script>
-        // Cursor customizado com distorsão
-        const cursor = document.querySelector('.cursor');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX - 10 + 'px';
-            cursor.style.top = e.clientY - 10 + 'px';
-            // Distorsão sutil no fundo (efeito visual)
-            document.body.style.transform = `scale(${1 + Math.random() * 0.01})`;
-            setTimeout(() => {
-                document.body.style.transform = 'scale(1)';
-            }, 100);
+        const hamburger = document.querySelector('.hamburger');
+        const navOverlay = document.querySelector('.nav-overlay');
+
+        hamburger.addEventListener('click', () => {
+            const isOpen = hamburger.classList.toggle('open');
+            hamburger.setAttribute('aria-expanded', isOpen);
+            navOverlay.style.display = isOpen ? 'flex' : 'none';
         });
 
-        // Gerar partículas sutis
-        const particlesContainer = document.querySelector('.particles');
-        for (let i = 0; i < 50; i++) {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 10 + 's';
-            particlesContainer.appendChild(particle);
-        }
-
-        // Rolagem superfluida com fragmentos de luz
-        window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            // Adicionar efeito de fragmentos (simulado com opacidade)
-            document.querySelector('.hero').style.opacity = 1 - scrollY / 1000;
+        document.querySelectorAll('.nav-overlay a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                hamburger.setAttribute('aria-expanded', "false");
+                navOverlay.style.display = 'none';
+            });
         });
     </script>
 </body>
