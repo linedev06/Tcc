@@ -510,3 +510,16 @@
         const sidebar = document.querySelector('.sidebar');
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('open');
+                        sidebar.classList.toggle('open');
+        });
+
+        // Fechar menu ao clicar em um link dentro da sidebar
+        document.querySelectorAll('.sidebar a').forEach(link => {
+            link.addEventListener('click', () => {
+                sidebar.classList.remove('open');
+                hamburger.classList.remove('open');
+            });
+        });
+    </script>
+</body>
+</html>
