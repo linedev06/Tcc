@@ -56,7 +56,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            animation: drawLine 0.5s ease-in-out 0.5s forwards, formSymbol 1s ease-in-out 1s forwards;
+            animation: drawLine 0.5s ease-in-out 0.5s forwards;
         }
         .symbol {
             opacity: 0;
@@ -122,6 +122,74 @@
         }
         nav a:hover::after {
             width: 100%;
+        }
+
+        /* Hambúrguer Menu - Apenas no Mobile */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 24px;
+            height: 16px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            position: relative;
+        }
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 1px;
+            background: #FFFFFF;
+            box-shadow: 0 0 1px rgba(255, 255, 255, 0.1); /* Leve brilho discreto */
+            transition: transform 0.22s linear, opacity 0.22s linear;
+            transform-origin: center;
+        }
+        .hamburger.open span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+            opacity: 0.7;
+        }
+        .hamburger.open span:nth-child(2) {
+            transform: rotate(-45deg) translate(6px, -6px);
+            opacity: 0.7;
+        }
+
+        /* Sidebar Menu */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            transition: right 0.22s linear;
+            z-index: 200;
+            padding: 5rem 2rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .sidebar.open {
+            right: 0;
+        }
+        .sidebar ul {
+            list-style: none;
+            width: 100%;
+        }
+        .sidebar a {
+            display: block;
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 300;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(42, 107, 255, 0.2);
+            transition: color 0.3s ease;
+        }
+        .sidebar a:hover {
+            color: #2A6BFF;
         }
 
         /* Hero Section */
@@ -206,15 +274,58 @@
             background: rgba(139, 42, 255, 0.3);
         }
 
+        /* Seções adicionais */
+        section {
+            min-height: 100vh;
+            padding: 5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        section h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+        }
+        section p {
+            font-size: 1.2rem;
+            font-weight: 200;
+            max-width: 800px;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+        .feature {
+            padding: 2rem;
+            border: 1px solid rgba(42, 107, 255, 0.3);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(42, 107, 255, 0.3);
+        }
+        .feature h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
         /* Animações */
         @keyframes fadeOut {
             to { opacity: 0; visibility: hidden; }
         }
         @keyframes drawLine {
             to { width: 200px; }
-        }
-        @keyframes formSymbol {
-            to { clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
         }
         @keyframes appear {
             to { opacity: 1; }
@@ -237,7 +348,10 @@
             .brand p { font-size: 1rem; }
             .hero h2 { font-size: 2rem; }
             .hero p { font-size: 1rem; }
-            nav ul { gap: 1rem; }
+            nav { display: none; }
+            .hamburger { display: flex; }
+            section h2 { font-size: 2rem; }
+            .features { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -264,7 +378,21 @@
                 <li><a href="#contato">Contato</a></li>
             </ul>
         </nav>
+        <button class="hamburger">
+            <span></span>
+            <span></span>
+        </button>
     </header>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar">
+        <ul>
+            <li><a href="#tecnologia">Tecnologia</a></li>
+            <li><a href="#plataforma">Plataforma</a></li>
+            <li><a href="#seguranca">Segurança</a></li>
+            <li><a href="#contato">Contato</a></li>
+        </ul>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -275,6 +403,73 @@
         <div class="particles">
             <!-- Partículas geradas dinamicamente via JS -->
         </div>
+    </section>
+
+    <!-- Seção Tecnologia -->
+    <section id="tecnologia">
+        <h2>Tecnologia Avançada</h2>
+        <p>Baxter utiliza algoritmos de aprendizado profundo e processamento quântico para oferecer insights em tempo real. Nossa IA adapta-se dinamicamente a cenários complexos, garantindo decisões otimizadas.</p>
+        <div class="features">
+            <div class="feature">
+                <h3>Aprendizado Profundo</h3>
+                <p>Modelos neurais treinados em vastos datasets para previsões precisas.</p>
+            </div>
+            <div class="feature">
+                <h3>Processamento Quântico</h3>
+                <p>Capacidade de computação exponencial para problemas insolúveis por métodos tradicionais.</p>
+            </div>
+            <div class="feature">
+                <h3>Análise em Tempo Real</h3>
+                <p>Monitoramento contínuo e resposta instantânea a mudanças no ambiente.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Plataforma -->
+    <section id="plataforma">
+        <h2>Plataforma Integrada</h2>
+        <p>A plataforma Baxter é escalável e modular, permitindo integração perfeita com sistemas existentes. Controle tudo de uma interface unificada.</p>
+        <div class="features">
+            <div class="feature">
+                <h3>Escalabilidade Global</h3>
+                <p>Opera em qualquer escala, de dispositivos individuais a redes mundiais.</p>
+            </div>
+            <div class="feature">
+                <h3>Integração Modular</h3>
+                <p>Adapte Baxter às suas necessidades com módulos personalizáveis.</p>
+            </div>
+            <div class="feature">
+                <h3>Interface Unificada</h3>
+                <p>Controle intuitivo através de dashboards avançados e comandos de voz.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Segurança -->
+    <section id="seguranca">
+        <h2>Segurança Inquebrável</h2>
+        <p>Baxter prioriza a segurança com criptografia de ponta a ponta, autenticação multifator e protocolos de isolamento de dados.</p>
+        <div class="features">
+            <div class="feature">
+                <h3>Criptografia Avançada</h3>
+                <p>Proteção de dados com algoritmos pós-quânticos.</p>
+            </div>
+            <div class="feature">
+                <h3>Autenticação Multifator</h3>
+                <p>Verificação rigorosa para acesso autorizado apenas.</p>
+            </div>
+            <div class="feature">
+                <h3>Isolamento de Dados</h3>
+                <p>Compartimentalização para prevenir vazamentos e ataques.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Contato -->
+    <section id="contato">
+        <h2>Entre em Contato</h2>
+        <p>Pronto para revolucionar suas operações? Entre em contato conosco para uma demonstração personalizada.</p>
+        <button class="btn">Solicitar Demonstração</button>
     </section>
 
     <!-- Cursor customizado -->
@@ -309,6 +504,9 @@
             // Adicionar efeito de fragmentos (simulado com opacidade)
             document.querySelector('.hero').style.opacity = 1 - scrollY / 1000;
         });
-    </script>
-</body>
-</html>
+
+        // Hambúrguer Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const sidebar = document.querySelector('.sidebar');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
